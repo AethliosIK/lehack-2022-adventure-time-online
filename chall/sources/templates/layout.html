@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Adventure Time {% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/static/img/logo.ico" />
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/main.css" rel="stylesheet">
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/vendor/bootstrap-notify/js/bootstrap-notify.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-default sidebar" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Adventure Time<img class="logo" src="/static/img/logo.ico"/></a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+                {% if not current_user.email %}
+                    <a class="navbar-brand" href="{{ url_for_security('login') }}">
+                        {{ _('Login') }}<span style="font-size:16px;" class="pull-left showopacity icon-nav glyphicon glyphicon-log-in"></span>
+                    </a>
+                    {% if security.registerable %}
+                        <a class="navbar-brand" href="{{ url_for_security('register') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">
+                            Register<span style="font-size:16px;" class="pull-left showopacity icon-nav glyphicon glyphicon-user"></span>
+                        </a>
+                    {% endif %}
+                {% else %}
+                    <a class="navbar-brand" href="/profile">
+                        Profile<img src="/static/img/finn.ico" class="pull-left showopacity icon-nav glyphicon">
+                    </a>
+                    <a class="navbar-brand" href="/settings">
+                        Settings<span style="font-size:16px;" class="pull-left showopacity icon-nav glyphicon glyphicon-cog"></span>
+                    </a>
+                    <a class="navbar-brand" href="{{ url_for_security('logout') }}">
+                        Logout<span style="font-size:16px;" class="pull-left showopacity icon-nav glyphicon glyphicon-log-out"></span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <div class="main">
+        <div id="page-content-wrapper">
+             {% block content %}{% endblock %}
+        </div>
+    </div>
+</body>
+<!-- Chall by Aethlios - https://aeth.cc -->
+</html>

@@ -1,0 +1,38 @@
+version: '2'
+
+services:
+  app:
+    build: 
+      dockerfile: docker/Dockerfile
+      context: .
+    ports:
+      - "5000:5000"
+    environment:
+      - WAIT_HOSTS=db:3306
+      - DATABASE_URI=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@db:3306/adventure
+      - REDIS_URI=${REDIS_URI}
+      - SECRET_KEY_FLASK=${SECRET_KEY_FLASK}
+      - PASSWORD_SALT_FLASK=${PASSWORD_SALT_FLASK}
+    networks:
+      - internal
+
+  db:
+    image: mysql:latest
+    hostname: db
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=adventure
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    networks:
+      - internal
+
+  redis:
+    image: redis:latest
+    hostname: redis
+    networks:
+      - internal
+
+networks:
+  internal:
+    external: false

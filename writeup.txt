@@ -1,0 +1,18 @@
+I log on to the site which seems to be an Adventure Time fan site.
+I can create an account on /register
+By connecting, I discover a part /profile 
+I can define a profile to share the favorite elements of the series.
+A feature is available to import and export your profile with YAML.
+
+The site is developed in python, it is determined by the header of the server responses:
+Server: Python/3.5.2
+
+So we can guess that the developer has used PyYaml to create his feature.dd
+
+A simple search on one's favorite search engine is enough to find CVE-2017-18342 :
+Execution Code with yaml.load.
+
+The minimal PoC is :
+season: !!python/object/apply:eval ['open("flag.txt", "rt").read()']
+
+Flag : lh2019_{W0rK&FvnDontMiX.Unle$$YouAre4Clown}

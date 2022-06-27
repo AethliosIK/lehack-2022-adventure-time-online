@@ -1,0 +1,4 @@
+*.pyc
+*.lock
+*.json
+/.venv/
